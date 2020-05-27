@@ -82,7 +82,7 @@
                             @if($item->in_stock)
                                 <span>In Stock</span>
                             @else
-                                <span style="color: #cc0000">None</span>
+                                <span style="color: #cc0000">Unavailable</span>
                             @endif
                         </div>
                         <div class="details_text">
