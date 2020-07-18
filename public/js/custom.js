@@ -18,7 +18,7 @@ $(document).ready(function()
 {
 	"use strict";
 
-	/* 
+	/*
 
 	1. Vars and Inits
 
@@ -45,7 +45,7 @@ $(document).ready(function()
 	initMenu();
 	initIsotope();
 
-	/* 
+	/*
 
 	2. Set Header
 
@@ -63,7 +63,7 @@ $(document).ready(function()
 		}
 	}
 
-	/* 
+	/*
 
 	3. Init Home Slider
 
@@ -141,7 +141,7 @@ $(document).ready(function()
 		}
 	}
 
-	/* 
+	/*
 
 	4. Init Search
 
@@ -161,7 +161,7 @@ $(document).ready(function()
 		}
 	}
 
-	/* 
+	/*
 
 	5. Init Menu
 
@@ -180,7 +180,7 @@ $(document).ready(function()
 				if(!menuActive)
 				{
 					openMenu();
-					
+
 					$(document).one('click', function cls(e)
 					{
 						if($(e.target).hasClass('menu_mm'))
@@ -253,7 +253,7 @@ $(document).ready(function()
 		menuActive = false;
 	}
 
-	/* 
+	/*
 
 	6. Init Isotope
 
@@ -275,7 +275,7 @@ $(document).ready(function()
 				},
 	            getSortData:
 	            {
-	            	price: function(itemElement)
+                    price: function(itemElement)
 	            	{
 	            		var priceEle = $(itemElement).find('.product_price').text().replace( '$', '' );
 	            		return parseFloat(priceEle);

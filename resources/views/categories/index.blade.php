@@ -43,9 +43,11 @@
                                         <span class="sorting_text">Sort by</span>
                                         <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                         <ul>
-                                            <li class="product_sorting_btn" data-isotope-option='{ "sortBy": "original-order" }'><span>Default</span></li>
-                                            <li class="product_sorting_btn" data-isotope-option='{ "sortBy": "price" }'><span>Price</span></li>
-                                            <li class="product_sorting_btn" data-isotope-option='{ "sortBy": "stars" }'><span>Name</span></li>
+                                            <li class="product_sorting_btn" data-order="default"><span>Default</span></li>
+                                            <li class="product_sorting_btn" data-order="price-low-high"><span>Price: Low-High</span></li>
+                                            <li class="product_sorting_btn" data-order="price-high-low"><span>Price: High-Low</span></li>
+                                            <li class="product_sorting_btn" data-order="name-a-z"><span>Name: A-Z</span></li>
+                                            <li class="product_sorting_btn" data-order="name-z-a"><span>Name: Z-A</span></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -58,30 +60,30 @@
                 <div class="col">
 
                     <div class="product_grid">
-                    @foreach($cat->products as $product)
+                    @foreach($products as $product)
                         <!-- Product -->
-                            @php
-                                $image = '';
-                                if(count($product->images) > 0){
-                                    $image = $product->images[0]['img'];
-                                } else {
-                                    $image = 'no_image.png';
-                                }
-                            @endphp
-                            <div class="product">
-                                <div class="product_image"><img src="/images/{{$image}}" alt="{{$product->title}}"></div>
-                                <div class="product_extra product_new"><a href="{{route('showCategory',$product->category['alias'])}}">{{$product->category['title']}}</a></div>
-                                <div class="product_content">
-                                    <div class="product_title"><a href="{{route('showProduct',['category',$product->id])}}">{{$product->title}}</a></div>
-                                    @if($product->new_price != null)
-                                        <div style="text-decoration: line-through">${{$product->price}}</div>
-                                        <div class="product_price">${{$product->new_price}}</div>
-                                    @else
-                                        <div class="product_price">${{$product->price}}</div>
-                                    @endif
-                                </div>
+                        @php
+                            $image = '';
+                            if(count($product->images) > 0){
+                                $image = $product->images[0]['img'];
+                            } else {
+                                $image = 'no_image.png';
+                            }
+                        @endphp
+                        <div class="product">
+                            <div class="product_image"><img src="/images/{{$image}}" alt="{{$product->title}}"></div>
+                            <div class="product_extra product_new"><a href="{{route('showCategory',$product->category['alias'])}}">{{$product->category['title']}}</a></div>
+                            <div class="product_content">
+                                <div class="product_title"><a href="{{route('showProduct',['category',$product->id])}}">{{$product->title}}</a></div>
+                                @if($product->new_price != null)
+                                    <div style="text-decoration: line-through">${{$product->price}}</div>
+                                    <div class="product_price">${{$product->new_price}}</div>
+                                @else
+                                    <div class="product_price">${{$product->price}}</div>
+                                @endif
                             </div>
-                        @endforeach
+                        </div>
+                    @endforeach
                     </div>
                     <div class="product_pagination">
                         <ul>
@@ -167,5 +169,45 @@
 @endsection
 
 @section('custom_js')
-    <script src="js/categories.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.product_sorting_btn').click(function () {
+                let orderBy = $(this).data('order')
+                $('.sorting_text').text($(this).find('span').text())
+
+                $.ajax({
+                    url: "{{route('showCategory',$cat->alias)}}",
+                    type: "GET",
+                    data: {
+                        orderBy: orderBy
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: (data) => {
+                        let positionParameters = location.pathname.indexOf('?');
+                        let url = location.pathname.substring(positionParameters,location.pathname.length);
+                        let newURL = url + '?'; // http://127.0.0.1:8001/phones?
+                        newURL += 'orderBy=' + orderBy; // http://127.0.0.1:8001/phones?orderBy=name-z-a
+                        history.pushState({}, '', newURL);
+
+                        $('.product_grid').html(data)
+
+                        $('.product_grid').isotope('destroy')
+                        $('.product_grid').imagesLoaded( function() {
+                            let grid = $('.product_grid').isotope({
+                                itemSelector: '.product',
+                                layoutMode: 'fitRows',
+                                fitRows:
+                                    {
+                                        gutter: 30
+                                    }
+                            });
+                        });
+
+                    }
+                });
+            })
+        })
+    </script>
 @endsection
