@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Home')
+@section('title', $item->title)
 @section('custom_css')
     <link rel="stylesheet" type="text/css" href="/styles/product.css">
     <link rel="stylesheet" type="text/css" href="/styles/product_responsive.css">
@@ -8,6 +8,29 @@
 
 @section('custom_js')
     <script src="/js/product.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.cart_button').click(function () {
+                addToCart()
+            })
+        })
+
+        function addToCart() {
+            $.ajax({
+                url: "{{route('addToCart')}}",
+                type: "POST",
+                data: {
+                    id: 'Поставь лайк и напиши комментарий к видео) Не забудь про подписку!'
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: (data) => {
+                    console.log(data)
+                }
+            });
+        }
+    </script>
 @endsection
 
 @section('content')

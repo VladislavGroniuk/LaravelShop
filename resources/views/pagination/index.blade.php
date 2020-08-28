@@ -13,5 +13,6 @@
                     @endif
                 @endforeach
             @endif
+        @endforeach
     </ul>
 </div>

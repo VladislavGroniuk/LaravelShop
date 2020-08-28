@@ -3,8 +3,8 @@
 @section('title', $cat->title)
 
 @section('custom_css')
-    <link rel="stylesheet" type="text/css" href="styles/categories.css">
-    <link rel="stylesheet" type="text/css" href="styles/categories_responsive.css">
+    <link rel="stylesheet" type="text/css" href="/styles/categories.css">
+    <link rel="stylesheet" type="text/css" href="/styles/categories_responsive.css">
 @endsection
 
 @section('content')
@@ -74,7 +74,7 @@
                             <div class="product_image"><img src="/images/{{$image}}" alt="{{$product->title}}"></div>
                             <div class="product_extra product_new"><a href="{{route('showCategory',$product->category['alias'])}}">{{$product->category['title']}}</a></div>
                             <div class="product_content">
-                                <div class="product_title"><a href="{{route('showProduct',['category',$product->id])}}">{{$product->title}}</a></div>
+                                <div class="product_title"><a href="{{route('showProduct',[$product->category['alias'],$product->id])}}">{{$product->title}}</a></div>
                                 @if($product->new_price != null)
                                     <div style="text-decoration: line-through">${{$product->price}}</div>
                                     <div class="product_price">${{$product->new_price}}</div>
@@ -100,7 +100,7 @@
                 <!-- Icon Box -->
                 <div class="col-lg-4 icon_box_col">
                     <div class="icon_box">
-                        <div class="icon_box_image"><img src="images/icon_1.svg" alt=""></div>
+                        <div class="icon_box_image"><img src="/images/icon_1.svg" alt=""></div>
                         <div class="icon_box_title">Free Shipping Worldwide</div>
                         <div class="icon_box_text">
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a ultricies metus. Sed nec molestie.</p>
@@ -111,7 +111,7 @@
                 <!-- Icon Box -->
                 <div class="col-lg-4 icon_box_col">
                     <div class="icon_box">
-                        <div class="icon_box_image"><img src="images/icon_2.svg" alt=""></div>
+                        <div class="icon_box_image"><img src="/images/icon_2.svg" alt=""></div>
                         <div class="icon_box_title">Free Returns</div>
                         <div class="icon_box_text">
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a ultricies metus. Sed nec molestie.</p>
@@ -122,7 +122,7 @@
                 <!-- Icon Box -->
                 <div class="col-lg-4 icon_box_col">
                     <div class="icon_box">
-                        <div class="icon_box_image"><img src="images/icon_3.svg" alt=""></div>
+                        <div class="icon_box_image"><img src="/images/icon_3.svg" alt=""></div>
                         <div class="icon_box_title">24h Fast Support</div>
                         <div class="icon_box_text">
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a ultricies metus. Sed nec molestie.</p>
