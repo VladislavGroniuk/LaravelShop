@@ -11,6 +11,8 @@
 |
 */
 
+
+
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/category/{cat}', 'ProductController@showCategory')->name('showCategory');
 Route::get('/category/{cat}/{product_id}', 'ProductController@show')->name('showProduct');

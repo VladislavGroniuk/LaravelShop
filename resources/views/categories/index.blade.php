@@ -182,8 +182,13 @@
                         let positionParameters = location.pathname.indexOf('?');
                         let url = location.pathname.substring(positionParameters,location.pathname.length);
                         let newURL = url + '?'; // http://127.0.0.1:8001/phones?
-                        newURL += 'orderBy=' + orderBy + "&page={{isset($_GET['page']) ? $_GET['page'] : 1}}"; // http://127.0.0.1:8001/phones?orderBy=name-z-a
+                        newURL += "&page={{isset($_GET['page']) ? $_GET['page'] : 1}}"+'orderBy=' + orderBy; // http://127.0.0.1:8001/phones?orderBy=name-z-a
                         history.pushState({}, '', newURL);
+
+                        $('.product_pagination a').each(function(index, value){
+                            let link= $(this).attr('href')
+                            $(this).attr('href',link+'&orderBy='+orderBy)
+                        })
 
                         $('.product_grid').html(data)
 
